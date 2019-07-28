@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+    </style>
+
+
+    <style name="Button" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Button.Main">
+        <item name="android:background">@drawable/background_btn_main</item>
+    </style>
+
+    <style name="Field" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Field.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Subtitle" parent="@android:style/Widget.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Subtitle.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Subtitle.Green">
+        <item name="android:textColor">@color/color_accent</item>
+    </style>
+
+    <style name="Title" parent="@android:style/Widget.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Title.White">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
+</resources>

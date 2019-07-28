@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_primary">
+
+
+    <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"/>
+
+
+    <Button
+            android:id="@+id/btnRetry"
+            style="@style/Button.Main"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/try_again"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsvContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+            <ImageView
+                    android:id="@+id/ivMovie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="240dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    tools:src="@drawable/lion_king"/>
+
+
+            <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Title.White"
+                    android:gravity="center"
+                    android:layout_marginBottom="16dp"
+                    tools:text="The Lion King (2019)"/>
+
+            <LinearLayout
+                    android:id="@+id/llPlayTrailer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/background_border_white"
+                    android:gravity="center">
+
+                <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="8dp"
+                        app:srcCompat="@drawable/ic_play"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Subtitle.White"
+                        android:text="@string/play_trailer"/>
+
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Subtitle.White"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/overview"/>
+
+            <TextView
+                    android:id="@+id/tvOverview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Field.White"
+                    android:layout_marginBottom="16dp"
+                    tools:text="Simba idolises his father, King Mufasa, and takes to heart his own royal destiny. But not everyone in the kingdom celebrates the new cub's arrival. Scar, Mufasa's brother—and former heir to the throne—has plans of his own. The battle for Pride Rock is ravaged with betrayal, tragedy and drama, ultimately resulting in Simba's exile. With help from a curious pair of newfound friends, Simba will have to figure out how to grow up and take back what is rightfully his."/>
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Subtitle.White"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/genres"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvGenres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Subtitle.White"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/realease_information"/>
+
+            <TextView
+                    android:id="@+id/tvRealeaseDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Field.White"
+                    android:layout_marginBottom="16dp"
+                    tools:text="July 19, 2019"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Subtitle.White"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/production_countries"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProductionCountries"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Subtitle.White"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/production_companies"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProductionCompanies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

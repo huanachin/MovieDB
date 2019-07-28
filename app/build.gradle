@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+def libs = rootProject.ext.libraries
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "com.example.themovieapp"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "androidx.constraintlayout:constraintlayout:${libs.constraintLayout}"
+
+    implementation "androidx.recyclerview:recyclerview:${libs.recyclerView}"
+    implementation "com.google.android:flexbox:${libs.flexbox}"
+
+    implementation "com.google.dagger:dagger-android:${libs.dagger}"
+    implementation "com.google.dagger:dagger-android-support:${libs.dagger}"
+
+    kapt "com.google.dagger:dagger-compiler:${libs.dagger}"
+    kapt "com.google.dagger:dagger-android-processor:${libs.dagger}"
+
+    implementation "com.google.code.gson:gson:${libs.gson}"
+
+    implementation "com.squareup.okhttp3:okhttp:${libs.okhttp}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${libs.okhttp}"
+
+    implementation "io.reactivex.rxjava2:rxjava:${libs.rxJavaVersion}"
+    implementation "io.reactivex.rxjava2:rxandroid:${libs.rxAndroid}"
+
+    implementation "android.arch.lifecycle:extensions:${libs.lifecycle}"
+    implementation "android.arch.lifecycle:viewmodel:${libs.lifecycle}"
+
+    implementation "com.github.bumptech.glide:glide:${libs.glide}"
+    kapt "com.github.bumptech.glide:compiler:${libs.glide}"
+
+    implementation "com.squareup.retrofit2:retrofit:${libs.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${libs.retrofit}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${libs.retrofit}"
+
+    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+}

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TheMovieApp</string>
+    <string name="try_again">Try again</string>
+    <string name="genres">Genres</string>
+    <string name="realease_information">Realese Information</string>
+    <string name="production_countries">Production countries</string>
+    <string name="production_companies">Production companies</string>
+    <string name="play_trailer">Play trailer</string>
+    <string name="overview">Overview</string>
+</resources>
