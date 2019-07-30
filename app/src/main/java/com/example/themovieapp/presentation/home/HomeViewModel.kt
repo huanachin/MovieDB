@@ -16,6 +16,7 @@ class HomeViewModel @Inject constructor(
     factory: MovieDataSourceFactory,
     private val preferencesDataStore: PreferencesDataStore
 ) : BaseViewModel() {
+
     var moviesPagedList: LiveData<PagedList<MovieEntity>>
 
     init {
