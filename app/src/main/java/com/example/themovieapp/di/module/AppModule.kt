@@ -4,10 +4,14 @@ import android.content.Context
 import com.example.themovieapp.App
 import com.example.themovieapp.data.repository.ConfigurationRepositoryImpl
 import com.example.themovieapp.data.repository.MoviesRepositoryImpl
-import com.example.themovieapp.data.repository.PreferenceRepositoryImpl
+import com.example.themovieapp.data.preferences.PreferencesDataStoreImpl
 import com.example.themovieapp.data.repository.interfaces.ConfigurationRepository
 import com.example.themovieapp.data.repository.interfaces.MoviesRepository
-import com.example.themovieapp.data.repository.interfaces.PreferenceRepository
+import com.example.themovieapp.data.preferences.PreferencesDataStore
+import com.example.themovieapp.executor.JobExecutor
+import com.example.themovieapp.executor.UIThread
+import com.example.themovieapp.executor.interfaces.PostExecutionThread
+import com.example.themovieapp.executor.interfaces.ThreadExecutor
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -29,7 +33,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providePreferencesRepository(preferenceRepositoryImpl: PreferenceRepositoryImpl): PreferenceRepository {
+    fun providePreferencesRepository(preferenceRepositoryImpl: PreferencesDataStoreImpl): PreferencesDataStore {
         return preferenceRepositoryImpl
     }
 
@@ -37,6 +41,18 @@ class AppModule {
     @Singleton
     fun provideMoviesRepository(moviesRepositoryImpl: MoviesRepositoryImpl): MoviesRepository {
         return moviesRepositoryImpl
+    }
+
+    @Provides
+    @Singleton
+    fun provideThreadExecutor(jobExecutor: JobExecutor): ThreadExecutor {
+        return jobExecutor
+    }
+
+    @Provides
+    @Singleton
+    fun providePostExecutionThread(uiThread: UIThread): PostExecutionThread {
+        return uiThread
     }
 
 }

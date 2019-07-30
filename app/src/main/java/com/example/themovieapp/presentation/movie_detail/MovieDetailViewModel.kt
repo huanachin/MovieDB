@@ -5,17 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import com.example.themovieapp.data.entity.MovieResultEntity
 import com.example.themovieapp.data.entity.MovieVideoEntity
 import com.example.themovieapp.data.entity.Resource
+import com.example.themovieapp.data.preferences.PreferencesDataStore
 import com.example.themovieapp.data.repository.interfaces.MoviesRepository
-import com.example.themovieapp.data.repository.interfaces.PreferenceRepository
+import com.example.themovieapp.executor.interfaces.PostExecutionThread
+import com.example.themovieapp.executor.interfaces.ThreadExecutor
 import com.example.themovieapp.presentation.base.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(
+    private val threadExecutor: ThreadExecutor,
+    private val postExecutionThread: PostExecutionThread,
     private val moviesRepository: MoviesRepository,
-    private val preferenceRepository: PreferenceRepository
+    private val preferencesDataStore: PreferencesDataStore
 ) : BaseViewModel() {
 
     var movieDetailResult = MutableLiveData<Resource<MovieResultEntity>>()
@@ -33,15 +36,15 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun getBaseImageUrl(): String {
-        return preferenceRepository.getImageBaseUrl()
+        return preferencesDataStore.getImageBaseUrl()
     }
 
     fun fetchMovieDetail() {
         movieDetailResult.value = Resource.Loading()
         addDisposable(
-            moviesRepository.fetchMovieDetail(preferenceRepository.getMovieId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            moviesRepository.fetchMovieDetail(preferencesDataStore.getMovieId())
+                .subscribeOn(Schedulers.from(threadExecutor))
+                .observeOn(postExecutionThread.getScheduler())
                 .subscribeWith(object : DisposableSingleObserver<MovieResultEntity>() {
                     override fun onSuccess(t: MovieResultEntity) {
                         movieDetailResult.value = Resource.Success(t)

@@ -1,14 +1,13 @@
-package com.example.themovieapp.data.repository
+package com.example.themovieapp.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.themovieapp.data.repository.interfaces.PreferenceRepository
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
 
-class PreferenceRepositoryImpl @Inject constructor(context: Context) :
-    PreferenceRepository {
+class PreferencesDataStoreImpl @Inject constructor(context: Context) :
+    PreferencesDataStore {
 
     private val preferences: SharedPreferences
     private val gson: Gson

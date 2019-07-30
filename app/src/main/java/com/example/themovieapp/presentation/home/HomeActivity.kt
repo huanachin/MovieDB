@@ -1,35 +1,34 @@
 package com.example.themovieapp.presentation.home
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.themovieapp.R
 import com.example.themovieapp.data.entity.MovieEntity
-import com.example.themovieapp.data.entity.Resource
-import com.example.themovieapp.presentation.adapter.MovieAdapter
+import com.example.themovieapp.presentation.adapter.MoviePagedAdapter
 import com.example.themovieapp.presentation.base.BaseActivity
 import com.example.themovieapp.presentation.movie_detail.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class HomeActivity : BaseActivity<HomeViewModel>(), MovieAdapter.MovieListener {
+
+class HomeActivity : BaseActivity<HomeViewModel>(), MoviePagedAdapter.MovieListener {
 
     @Inject
     lateinit var factory: ViewModelProvider.Factory
 
     private lateinit var homeViewModel: HomeViewModel
 
-    private lateinit var movieAdapter: MovieAdapter
+    private lateinit var moviePagedAdapter: MoviePagedAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
-        events()
     }
 
     override fun getViewModel(): HomeViewModel {
@@ -38,39 +37,21 @@ class HomeActivity : BaseActivity<HomeViewModel>(), MovieAdapter.MovieListener {
     }
 
     private fun configureRecycler() {
-        rvMovies.layoutManager = GridLayoutManager(this, 2)
-        movieAdapter = MovieAdapter(homeViewModel.getBaseImageUrl())
-        movieAdapter.setListener(this)
-        rvMovies.adapter = movieAdapter
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            rvMovies.layoutManager = GridLayoutManager(this, 2)
+        } else {
+            rvMovies.layoutManager = GridLayoutManager(this, 3)
+        }
+        moviePagedAdapter = MoviePagedAdapter(homeViewModel.getBaseImageUrl())
+        moviePagedAdapter.setListener(this)
+        rvMovies.adapter = moviePagedAdapter
     }
 
     private fun init() {
         configureRecycler()
-        homeViewModel.getMoviesResult().observe(this, Observer {
-            when (it) {
-                is Resource.Loading -> {
-                    rvMovies.visibility = View.GONE
-                    btnRetry.visibility = View.GONE
-                    progress.visibility = View.VISIBLE
-                }
-                is Resource.Success -> {
-                    progress.visibility = View.GONE
-                    btnRetry.visibility = View.GONE
-                    rvMovies.visibility = View.VISIBLE
-                    movieAdapter.updateMovies(it.data)
-                }
-
-                is Resource.Failure -> {
-                    rvMovies.visibility = View.GONE
-                    progress.visibility = View.GONE
-                    btnRetry.visibility = View.VISIBLE
-                }
-            }
+        homeViewModel.moviesPagedList.observe(this, Observer {
+            moviePagedAdapter.submitList(it)
         })
-    }
-
-    private fun events() {
-        btnRetry.setOnClickListener { homeViewModel.fetchPopularMovies() }
     }
 
     override fun onMovieSelected(movie: MovieEntity) {

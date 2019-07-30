@@ -1,8 +1,9 @@
 package com.example.themovieapp.presentation.home
 
 import androidx.lifecycle.ViewModelProvider
-import com.example.themovieapp.data.repository.interfaces.MoviesRepository
-import com.example.themovieapp.data.repository.interfaces.PreferenceRepository
+import com.example.themovieapp.data.datasource.MovieDataSourceFactory
+import com.example.themovieapp.data.preferences.PreferencesDataStore
+import com.example.themovieapp.executor.interfaces.ThreadExecutor
 import com.example.themovieapp.utils.ViewModelProviderFactory
 import dagger.Module
 import dagger.Provides
@@ -12,10 +13,11 @@ class HomeModule {
 
     @Provides
     fun providesHomeViewModel(
-        moviesRepository: MoviesRepository,
-        preferenceRepository: PreferenceRepository
+        threadExecutor: ThreadExecutor,
+        movieDataSourceFactory: MovieDataSourceFactory,
+        preferencesDataStore: PreferencesDataStore
     ): HomeViewModel {
-        return HomeViewModel(moviesRepository, preferenceRepository)
+        return HomeViewModel(threadExecutor, movieDataSourceFactory, preferencesDataStore)
     }
 
     @Provides

@@ -1,6 +1,5 @@
 package com.example.themovieapp.di.builders
 
-import com.example.themovieapp.data.entity.MovieDetailEntity
 import com.example.themovieapp.presentation.home.HomeActivity
 import com.example.themovieapp.presentation.home.HomeModule
 import com.example.themovieapp.presentation.movie_detail.MovieDetailActivity

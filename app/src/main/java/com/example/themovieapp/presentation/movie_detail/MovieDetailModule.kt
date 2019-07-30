@@ -1,8 +1,10 @@
 package com.example.themovieapp.presentation.movie_detail
 
 import androidx.lifecycle.ViewModelProvider
+import com.example.themovieapp.data.preferences.PreferencesDataStore
 import com.example.themovieapp.data.repository.interfaces.MoviesRepository
-import com.example.themovieapp.data.repository.interfaces.PreferenceRepository
+import com.example.themovieapp.executor.interfaces.PostExecutionThread
+import com.example.themovieapp.executor.interfaces.ThreadExecutor
 import com.example.themovieapp.utils.ViewModelProviderFactory
 import dagger.Module
 import dagger.Provides
@@ -12,10 +14,12 @@ class MovieDetailModule {
 
     @Provides
     fun providesMovieDetailViewModel(
+        threadExecutor: ThreadExecutor,
+        postExecutionThread: PostExecutionThread,
         moviesRepository: MoviesRepository,
-        preferenceRepository: PreferenceRepository
+        preferencesDataStore: PreferencesDataStore
     ): MovieDetailViewModel {
-        return MovieDetailViewModel(moviesRepository, preferenceRepository)
+        return MovieDetailViewModel(threadExecutor, postExecutionThread, moviesRepository, preferencesDataStore)
     }
 
     @Provides

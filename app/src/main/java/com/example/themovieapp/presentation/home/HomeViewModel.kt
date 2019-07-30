@@ -1,57 +1,41 @@
 package com.example.themovieapp.presentation.home
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import com.example.themovieapp.data.datasource.MovieDataSourceFactory
 import com.example.themovieapp.data.entity.MovieEntity
-import com.example.themovieapp.data.entity.Resource
-import com.example.themovieapp.data.repository.interfaces.MoviesRepository
-import com.example.themovieapp.data.repository.interfaces.PreferenceRepository
-import com.example.themovieapp.data.response.PopularMoviesResponse
+import com.example.themovieapp.data.preferences.PreferencesDataStore
+import com.example.themovieapp.executor.interfaces.ThreadExecutor
 import com.example.themovieapp.presentation.base.BaseViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
+
 class HomeViewModel @Inject constructor(
-    private val moviesRepository: MoviesRepository,
-    private val preferenceRepository: PreferenceRepository
+    threadExecutor: ThreadExecutor,
+    factory: MovieDataSourceFactory,
+    private val preferencesDataStore: PreferencesDataStore
 ) : BaseViewModel() {
-
-    var moviesResult = MutableLiveData<Resource<List<MovieEntity>>>()
-
-    fun getMoviesResult(): LiveData<Resource<List<MovieEntity>>> {
-        return moviesResult
-    }
+    var moviesPagedList: LiveData<PagedList<MovieEntity>>
 
     init {
-        fetchPopularMovies()
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(true)
+            .setInitialLoadSizeHint(20)
+            .setPageSize(20)
+            .setPrefetchDistance(2)
+            .build()
+
+        moviesPagedList = LivePagedListBuilder(factory, config)
+            .setFetchExecutor(threadExecutor)
+            .build()
     }
 
     fun getBaseImageUrl(): String {
-        return preferenceRepository.getImageBaseUrl()
+        return preferencesDataStore.getImageBaseUrl()
     }
 
     fun selectMovie(movieId: Int) {
-        preferenceRepository.setMovieId(movieId)
-    }
-
-    fun fetchPopularMovies() {
-        moviesResult.value = Resource.Loading()
-        addDisposable(
-            moviesRepository.fetchPopularMovies()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
-                    override fun onSuccess(t: PopularMoviesResponse) {
-                        moviesResult.value = Resource.Success(t.results)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        moviesResult.value = Resource.Failure()
-                    }
-
-                })
-        )
+        preferencesDataStore.setMovieId(movieId)
     }
 }

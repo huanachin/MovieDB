@@ -9,29 +9,10 @@
         android:background="@color/color_primary"
         tools:context=".presentation.home.HomeActivity">
 
-    <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"/>
-
-
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMovies"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"/>
-
-
-    <Button
-            android:id="@+id/btnRetry"
-            style="@style/Button.Main"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/try_again"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
 </FrameLayout>

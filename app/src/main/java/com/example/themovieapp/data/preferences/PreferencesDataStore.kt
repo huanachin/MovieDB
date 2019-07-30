@@ -1,6 +1,6 @@
-package com.example.themovieapp.data.repository.interfaces
+package com.example.themovieapp.data.preferences
 
-interface PreferenceRepository {
+interface PreferencesDataStore {
     fun getImageBaseUrl(): String
     fun setImageBaseUrl(baseUrl: String?)
     fun getLogoSizes(): List<String>?
