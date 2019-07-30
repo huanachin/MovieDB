@@ -14,8 +14,4 @@ abstract class BaseActivity<T : BaseViewModel> : DaggerAppCompatActivity() {
         this.viewModel = if (viewModel == null) getViewModel() else viewModel
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel?.onDestroy()
-    }
 }

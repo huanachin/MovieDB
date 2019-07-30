@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.home.HomeActivity">
+        <activity android:name=".presentation.home.HomeActivity"
+                  android:launchMode="singleTask">
         </activity>
         <activity android:name=".presentation.movie_detail.MovieDetailActivity"
                   android:launchMode="singleTask"/>

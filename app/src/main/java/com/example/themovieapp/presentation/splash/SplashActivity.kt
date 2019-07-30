@@ -1,5 +1,8 @@
 package com.example.themovieapp.presentation.splash
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -20,6 +23,7 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
     lateinit var factory: ViewModelProvider.Factory
 
     private lateinit var splashViewModel: SplashViewModel
+    private lateinit var animator: ValueAnimator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +45,7 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
                     progress.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
-                    navigateToMain()
+                    startAnimation(ivLogo)
                 }
                 is Resource.Failure -> {
                     progress.visibility = View.GONE
@@ -55,7 +59,30 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
         btnRetry.setOnClickListener { splashViewModel.fetchConfigurations() }
     }
 
+
+    private fun startAnimation(view: View) {
+        animator = ValueAnimator.ofInt(0, 32, 0)
+        animator.addUpdateListener { valueAnimator ->
+            val value = valueAnimator.animatedValue as Int
+            view.setPadding(value, value, value, value)
+        }
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                navigateToMain()
+            }
+        })
+        animator.duration = 1000
+        animator.start()
+    }
+
+
     private fun navigateToMain() {
         startActivity(Intent(this, HomeActivity::class.java))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        animator.removeAllListeners()
     }
 }
