@@ -17,4 +17,8 @@ class MovieDataSourceFactory @Inject constructor(private val moviesRepository: M
         mutableLiveData.postValue(movieDataSource)
         return movieDataSource
     }
+
+    fun destroy() {
+        movieDataSource.destroy()
+    }
 }

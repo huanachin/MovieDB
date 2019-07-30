@@ -1,6 +1,7 @@
 package com.example.themovieapp.presentation.base
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 

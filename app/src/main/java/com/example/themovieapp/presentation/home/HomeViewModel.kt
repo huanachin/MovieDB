@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     threadExecutor: ThreadExecutor,
-    factory: MovieDataSourceFactory,
+    private val factory: MovieDataSourceFactory,
     private val preferencesDataStore: PreferencesDataStore
 ) : BaseViewModel() {
 
@@ -38,5 +38,10 @@ class HomeViewModel @Inject constructor(
 
     fun selectMovie(movieId: Int) {
         preferencesDataStore.setMovieId(movieId)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        factory.destroy()
     }
 }
