@@ -61,7 +61,8 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
 
 
     private fun startAnimation(view: View) {
-        animator = ValueAnimator.ofInt(0, 32, 0)
+        val paddingAnimation = resources.getDimensionPixelSize(R.dimen.padding_animation)
+        animator = ValueAnimator.ofInt(paddingAnimation, 0, paddingAnimation)
         animator.addUpdateListener { valueAnimator ->
             val value = valueAnimator.animatedValue as Int
             view.setPadding(value, value, value, value)
@@ -69,7 +70,7 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
         animator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
-                navigateToMain()
+                navigateToMain(view)
             }
         })
         animator.duration = 1000
@@ -77,7 +78,7 @@ class SplashActivity : BaseActivity<SplashViewModel>() {
     }
 
 
-    private fun navigateToMain() {
+    private fun navigateToMain(view: View) {
         startActivity(Intent(this, HomeActivity::class.java))
     }
 
