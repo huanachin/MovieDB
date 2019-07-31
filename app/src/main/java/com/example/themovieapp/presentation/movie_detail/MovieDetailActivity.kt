@@ -90,8 +90,8 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel>() {
                 }
                 is Resource.Failure -> {
                     nsvContent.visibility = View.GONE
-                    btnRetry.visibility = View.GONE
-                    progress.visibility = View.VISIBLE
+                    progress.visibility = View.GONE
+                    btnRetry.visibility = View.VISIBLE
                 }
             }
         })

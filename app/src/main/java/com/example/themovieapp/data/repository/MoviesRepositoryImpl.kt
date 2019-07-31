@@ -14,18 +14,18 @@ import javax.inject.Inject
 class MoviesRepositoryImpl @Inject constructor(private val restApi: RestApi) : MoviesRepository {
 
     override fun fetchPopularMovies(page: Int): Single<List<MovieEntity>> {
-        return restApi.fetchFavoritesMovies(Constants.API_MOVIE_KEY, "en-US", page, "").map { it.results }
+        return restApi.fetchFavoritesMovies(Constants.API_MOVIE_KEY, Constants.DEFAULT_LANGUAGE, page, "")
+            .map { it.results }
     }
 
     override fun fetchMovieDetail(movieId: Int): Single<MovieResultEntity> {
-        val singleDetail = restApi.fetchMovieDetail(movieId, Constants.API_MOVIE_KEY, "en-US")
-        val singleVideos = restApi.fetchMovieVideos(movieId, Constants.API_MOVIE_KEY, "en-US")
-        return Single.zip(
+        val singleDetail = restApi.fetchMovieDetail(movieId, Constants.API_MOVIE_KEY, Constants.DEFAULT_LANGUAGE)
+        val singleVideos = restApi.fetchMovieVideos(movieId, Constants.API_MOVIE_KEY, Constants.DEFAULT_LANGUAGE)
+        return Single.zip(singleVideos,
             singleDetail,
-            singleVideos,
-            BiFunction<MovieDetailEntity, MovieVideoResponse, MovieResultEntity> { t1: MovieDetailEntity,
-                                                                                   t2: MovieVideoResponse ->
-                MovieResultEntity(movieDetail = t1, videos = t2.results)
+            BiFunction<MovieVideoResponse, MovieDetailEntity, MovieResultEntity> { t1: MovieVideoResponse,
+                                                                                   t2: MovieDetailEntity ->
+                MovieResultEntity(videos = t1.results, movieDetail = t2)
             })
     }
 }
